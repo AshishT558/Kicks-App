@@ -48,4 +48,35 @@ inference_router.get("/:encodedPrefs", async (req, res) => {
     }
 });
 
+//route to call Flask microservice, send results to mongodb, and return shoe results
+inference_router.get("/get_shoe/:encodedShoe", async (req, res) => {
+    let decodedShoe = decodeURIComponent(req.params.encodedShoe)
+    // get json data form Flask microservice
+    try {
+        //adjust underarmour
+        if(decodedShoe.toLowerCase().includes("under armour")) {
+            decodedShoe = decodedShoe.replace("Under Armour", "underarmour")
+        }
+        const response = await axios.get(`http://18.219.22.255/scrape/${decodedShoe}`)
+
+        const shoeJSON = response.data
+        console.log(shoeJSON)
+        // send data to mongodb
+        axios.post('http://localhost:5050/record/insert_shoes', shoeJSON)
+        .then(response => {
+            console.log('Success importing data to mongo');
+          })
+          .catch(error => {
+            console.error('Error importing data');
+          });
+
+        console.log(response.data)
+        res.status(200).send(response.data)
+    } catch (error) {
+        console.error("Error getting shoes from Flask or importing into Mongo. Error:", error)
+        res.status(500).send("Error on server side")
+    }
+    
+})
+
 export default inference_router;

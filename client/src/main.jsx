@@ -8,9 +8,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import ShoeList from "./components/ShoeList"
-import Recommendation from "./components/Recommendation"
-import LandingPage from './components/LandingPage.jsx';
+import AboutPage from "./pages/AboutPage"
+import GalleryPage from "./pages/GalleryPage"
+import ExplorePage from "./pages/ExplorePage"
+import LandingPage from './pages/LandingPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,22 +25,32 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/all_shoes",
+    path: "/about",
     element: <App />,
     children: [
       {
-        path: "/all_shoes",
-        element: <ShoeList />,
+        path: "/about",
+        element: <AboutPage />,
       },
     ],
   },
   {
-    path: "/get_recommendation",
+    path: "/gallery",
     element: <App />,
     children: [
       {
-        path: "/get_recommendation",
-        element: <Recommendation />,
+        path: "/gallery",
+        element: <GalleryPage />,
+      },
+    ],
+  },
+  {
+    path: "/explore",
+    element: <App />,
+    children: [
+      {
+        path: "/explore",
+        element: <ExplorePage />,
       },
     ],
   },

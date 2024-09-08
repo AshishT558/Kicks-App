@@ -17,7 +17,7 @@ try {
     console.log("Pinged your deployment. Connected to MongoDB successfully");
 }
 catch(err) {
-    console.errror(err)
+    console.error(err)
 }
 
 let db = client.db("shoes");

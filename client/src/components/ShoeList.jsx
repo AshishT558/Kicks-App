@@ -1,34 +1,23 @@
 import { useState, useEffect } from "react"
+import ShoeItem from "./ShoeItem";
 
-const ShoeItem = (props) => {
-    return(
-        <tr>
-            <td>
-                {props.shoe.name}
-            </td>
-            <td>
-                {props.shoe.sale_price}
-            </td>
-            <td>
-                {props.shoe.link}
-            </td>
-            <td>
-                {props.shoe.Score}
-            </td>
-            <td>
-                <img src={props.shoe.image}>
-                </img>
-            </td>
-        </tr>
-    )
-}
-
-export default function ShoeList() {
+export default function ShoeList({queryType, query}) {
     const [data, setData] = useState([])
 
     //Call to get all shoes
     async function fetchData() {
-        const response = await fetch(`http://localhost:5050/record/`)
+        let response;
+        if(queryType && query) {
+            const query_data = {
+                queryClass: queryType,
+                queryArg: query
+            }
+            response = await fetch(`http://localhost:5050/record/`, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(query_data)})
+        }
+        else {
+            response = await fetch(`http://localhost:5050/record/`)
+        }
+        
         if(!response.ok) {
             const message = `An error occurred: ${response.statusText}`;
             console.error(message);
@@ -40,26 +29,34 @@ export default function ShoeList() {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [queryType, query])
 
     //Map shoe objects to list
     function shoeList() {
-        return data.map((shoe) => {
+        if(data.length > 0) {
+            return data.map((shoe) => {
+                return (
+                    <ShoeItem
+                        shoe={shoe}
+                        key={shoe._id}>
+                    </ShoeItem>
+                )
+            })   
+        } else {
             return (
-                <ShoeItem
-                    shoe={shoe}
-                    key={shoe._id}>
-                </ShoeItem>
+                <div className="">
+                    No Shoes Found, Sorry
+                </div>
             )
-        })
+        }
     }
 
     return (
         <div>
-            <h1>Shoes</h1>
-            <button onClick={fetchData}>Refresh</button>
-            <div>
-                <table>
+            {/* <button onClick={fetchData}>Refresh</button> */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 ">
+                {shoeList()}
+                {/* <table>
                     <thead>
                         <tr>
                             <th>
@@ -76,7 +73,7 @@ export default function ShoeList() {
                     <tbody>
                         {shoeList()}
                     </tbody>
-                </table>
+                </table> */}
             </div>
         </div>
     )
