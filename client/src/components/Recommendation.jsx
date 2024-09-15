@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react"
 import * as React from "react"
 import ShoeItem from "./ShoeItem"
+import Loader from "./Loader"
 
-export default function Recommendation(params) {
+export default function Recommendation({ sharedPrefs }) {
     const [llm_rec, setLLMRec] = useState("")
     const [user_input, setInput] = useState("")
-    const [prefs, setPrefs] = useState([])
     const [exploredShoe, setExplored] = useState([])
+    const [startLoad, setStartLoad] = useState(false)
     const [loaded, setLoaded] = useState(false)
     
     //Call to get all shoes
     async function fetchRecommendation() {
-        const encodedPrefs = encodeURIComponent(prefs.join(','))
+        const encodedPrefs = encodeURIComponent(sharedPrefs.join(','))
         const response = await fetch(`http://localhost:5050/inference/${encodedPrefs}`)
         if(!response.ok) {
             const message = `An error occurred: ${response.statusText}`;
@@ -24,6 +25,7 @@ export default function Recommendation(params) {
     }
 
     async function processRecommendation(text) {
+        setStartLoad(true)
         console.log(`${text} requested`)
         const encodedShoe = encodeURIComponent(text)
         const shoe_response = await fetch(`http://localhost:5050/inference/get_shoe/${encodedShoe}`)
@@ -36,6 +38,7 @@ export default function Recommendation(params) {
         console.log("All API Calls success:", shoeDetails)
         setExplored(shoeDetails)
         console.log(exploredShoe.length)
+        setStartLoad(false)
         setLoaded(true)
         
     }
@@ -47,15 +50,17 @@ export default function Recommendation(params) {
             const containsKeyword = keywords.some(keyword => line.includes(keyword));
             
             return (
-                <React.Fragment key={index}>
+                <React.Fragment className="" key={index}>
                     {containsKeyword ? (
-                        <span>
+                    <div className="flex flex-col bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400">
+                        <span className="text-lg">
                             {line} 
-                            <span className="" onClick={() => processRecommendation(line)}>
-                                Explore &rarr;
-                            </span>
-                            <br />
                         </span>
+                        <button className="text-white w-[20rem] h-10 rounded-full ring-2 ring-orange-500 hover:ring-orange-600 mt-5" onClick={() => processRecommendation(line)}>
+                        Explore &rarr;
+                        </button>
+                    </div>
+                        
                     ) : (
                         <br /> // Render just a line break if the line does not contain the keywords
                     )}
@@ -66,6 +71,7 @@ export default function Recommendation(params) {
 
         //Map shoe objects to list
     function shoeList(shoelist) {
+        exploredShoe.sort((a, b) => b.Score - a.Score);
         return exploredShoe.map((shoe) => {
             return (
                 <ShoeItem
@@ -76,80 +82,34 @@ export default function Recommendation(params) {
         })
     }
     
-    return (
-        <div className="flex flex-col h-screen items-center justify-center">
-            <h1>What are you looking for?</h1>
-            
-        </div>
-    )
-    
-    if(loaded == false) {
-        return (
-            <div>
-                <h1>Recommendation</h1>
-                <input type="text"  placeholder="Preference" onChange={(e) => setInput(e.target.value)}></input>
-                <button onClick={() => setPrefs([...prefs, user_input])}>Add Preference</button>
-                <button onClick={fetchRecommendation}>Get Recommendation</button>
-                <div>
-                    <h3>Current Prefs: </h3>
-                    <div>{prefs}</div>
+    function mapPrefs(prefs) {
+        return prefs.map((pref) => {
+            return (
+                <div className="flex flex-col rounded-full w-[10rem] h-10 bg-orange-400 text-center justify-center ">
+                    {pref}
                 </div>
-                <div>
-                    <h3> Recommendation: </h3>
-                    {formatRecommendation(llm_rec)}
+            )
+        })
+    }
 
-                    <h2>Search results: </h2>
-                    <div>
-                        No Shoe selected yet
-                    </div>
+    return (
+        <div id="recommend" className="flex flex-col items-center justify-center fade-in mx-5 text-center py-[10rem] lg:py-[20rem]">
+            {/* <a href="#feel" className="pb-20">
+                <div className="fade-in">
+                    <img src="/arrow-vector.jpg" className=" hover:scale-105" width={100} height={100}></img>
                 </div>
+            </a> */}
+            <h1 className="text-5xl animate-up-float">Nice Work! Here's what you <span className="text-orange-500">need:</span></h1>
+            <div className="flex flex-col gap-y-5 lg:flex-row lg:gap-x-5 mt-5 fade-in">{mapPrefs(sharedPrefs)}</div>
+            <a className="mt-5 hover:text-orange-400" href="#sports">Edit Preferences</a>
+            <button className="flex flex-col items-center justify-center w-[20rem] h-10 bg-black rounded-full lg:mb-10 ring-2 ring-orange-500 hover:ring-orange-600 hover:scale-105 mt-20" 
+            onClick={fetchRecommendation}>Get Recommendation </button>
+            <div className="lg:hidden">{startLoad && <Loader className="mt-5"></Loader>}</div>
+            <div className="flex lg:flex-row flex-col gap-y-10 text-center lg:gap-x-10 lg:mt-10">{formatRecommendation(llm_rec)}</div>
+            <div className="invisible lg:visible">{startLoad && <Loader className="mt-5"></Loader>}</div>
+            <div className="grid lg:grid-cols-4 mt-20 gap-5 ">
+                {loaded && shoeList()}
             </div>
-        )
-    }
-    else if(loaded == true) {
-        return (
-            <div>
-                <h1>Recommendation</h1>
-                <input type="text"  placeholder="Preference" onChange={(e) => setInput(e.target.value)}></input>
-                <button onClick={() => setPrefs([...prefs, user_input])}>Add Preference</button>
-                <button onClick={fetchRecommendation}>Get Recommendation</button>
-                <div>
-                    <h3>Current Prefs: </h3>
-                    <div>{prefs}</div>
-                </div>
-                <div>
-                    <h3> Recommendation: </h3>
-                    {formatRecommendation(llm_rec)}
-    
-                    <h2>Search results: </h2>
-                    <div>
-                        <div>
-                            <h1>Shoes</h1>
-                            <div>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Name
-                                            </th>
-                                            <th>
-                                                Price
-                                            </th>
-                                            <th>
-                                                Link
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {shoeList()}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-    
+        </div>
+    ) 
 }

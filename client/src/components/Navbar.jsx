@@ -28,7 +28,7 @@ export default function Navbar() {
             <nav className="flex fixed items-center ml-8 my-4 fade-in bg-opacity-50 z-50">
                 
                 <NavLink to="/" className="lg:text-7xl text-4xl font-bold" onClick={handleClick}>
-                    <div className="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400 hover:animate-pulse">
+                    <div className="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400">
                         KICKS
                     </div>
                 </NavLink>

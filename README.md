@@ -10,7 +10,7 @@ The Kicks application works by taking in your input for what you'd prefer in a s
 This is a MERN Stack application, with three key components: the client, server, and microservice. 
 
 ### Client
-The UI/UX portion of this project was built with React and Tailwind CSS after being designed in Miro. It is fully adaptable to mobile and desktop screens, providing users with the choice of where they want to use its features. Shoe information whether stored or retrieved points back to original seller sites so that users can quickly make purchases by haivng the original seller site available to them. *This is not a commerce application. 
+The UI/UX portion of this project was built with React and Tailwind CSS after being designed in Miro. It is fully adaptable to mobile and desktop screens, providing users with the choice of where they want to use its features. Shoe information whether stored or retrieved points back to original seller sites so that users can quickly make purchases by having the original seller site available to them.
 
 ### Server
 The backend of this project was built with Express which manages the API calls and routes to fetch information. For shoe recommendations, the server prompts a Llama 3.1 LLM model through Hugging Face's Inference API, returning recommendation in JSON that is parsed and served to the frontend. For data storage, the server interacts with a MongoDB database for easy functionality. Finally, for specific shoe lookups and real-time price retrieval, the server calls the Flask microservice. 
