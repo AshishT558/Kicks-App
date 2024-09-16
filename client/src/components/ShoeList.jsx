@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
+import Loader from "./Loader";
 import ShoeItem from "./ShoeItem";
 
 export default function ShoeList({queryType, query}) {
     const [data, setData] = useState([])
+    
 
     //Call to get all shoes
     async function fetchData() {
@@ -31,6 +33,8 @@ export default function ShoeList({queryType, query}) {
         fetchData()
     }, [queryType, query])
 
+
+
     //Map shoe objects to list
     function shoeList() {
         if(data.length > 0) {
@@ -45,7 +49,7 @@ export default function ShoeList({queryType, query}) {
         } else {
             return (
                 <div className="">
-                    No Shoes Found, Sorry
+                    <Loader></Loader>
                 </div>
             )
         }
@@ -53,27 +57,8 @@ export default function ShoeList({queryType, query}) {
 
     return (
         <div>
-            {/* <button onClick={fetchData}>Refresh</button> */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 ">
+            <div className="grid  grid-cols-2 lg:grid-cols-4 gap-5 ">
                 {shoeList()}
-                {/* <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Price
-                            </th>
-                            <th>
-                                Link
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {shoeList()}
-                    </tbody>
-                </table> */}
             </div>
         </div>
     )

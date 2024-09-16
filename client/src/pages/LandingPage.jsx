@@ -14,10 +14,10 @@ export default function LandingPage() {
     return (
         <div id="background_image" className="bg-fixed bg-contain lg:bg-cover bg-[center_5rem] lg:bg-[center_bottom]" style={mainStyle}>
             <div id ="landing_page_1_full_area" className="flex justify-center h-screen">
-                <div className="h-[120rem]">
+                <div className="lg:h-[120rem] h-[100rem]">
                     <div className="flex flex-col items-center h-screen justify-end">
                         <a href="/#start">
-                            <div className="flex flex-col items-center justify-center w-[20rem] h-10 bg-black rounded-full mb-10 hover:mb-12 hover:animate-none ring-2 ring-orange-500 hover:ring-orange-600 animate-bounce">
+                            <div className="flex flex-col items-center justify-center w-[20rem] h-10 bg-black rounded-full mb-[10rem] lg:mb-10 lg:hover:mb-12 hover:animate-none ring-2 ring-orange-500 hover:ring-orange-600 animate-bounce">
                                 Get Started
                             </div>
                         </a>
@@ -27,20 +27,20 @@ export default function LandingPage() {
                     <div className="flex flex-col items-center h-screen">
                         <div id="start" className=""></div>
                         <div className="flex flex-col items-center h-screen fade-in">
-                            <div className="flex flex-col gap-y-5 text-3xl lg:text-6xl pt-[7rem] lg:pt-[15rem]">
+                            <div className="flex flex-col gap-y-5 text-3xl lg:text-6xl pt-[5rem] lg:pt-[15rem]">
                                 <h1>The <span className="text-orange-500 font-semibold">AI-Powered</span> Shoe App</h1>
                                 <h2>...built for <span className="font-bold text-orange-300">you</span>.</h2>
                             </div>
                             <div className="">
                                 <p></p>
                             </div>
-                            <div className="grid grid-cols-2 lg:grid-cols-4 place-items-center gap-x-[2rem] lg:gap-x-[10rem] pt-10">
+                            <div className="grid grid-cols-2 lg:grid-cols-4 place-items-center gap-x-[1rem] mx-5 lg:gap-x-[10rem] pt-10">
                                 <img src="/nike.jpg" width={200} height={200}></img>
                                 <img src="/underarmour.jpg" width={200} height={200}></img>
                                 <img src="/adidas.jpg" width={200} height={200}></img>
                                 <img src="/skechers.webp" width={200} height={200}></img>
                             </div>
-                            <div className="grid lg:grid-cols-2 align-center gap-x-10 pt-10">
+                            <div className="grid lg:grid-cols-2 align-center gap-x-10 lg:pt-10">
                                 <NavLink to="/gallery">
                                     <div className="flex flex-col items-center justify-center w-[20rem] h-10 bg-black rounded-full mb-10 ring-2 ring-orange-500 hover:ring-orange-600 hover:scale-105">
                                         BROWSE OUR COLLECTION
