@@ -8,7 +8,7 @@ const app = express();
 
 // Configure CORS to allow requests from Vercel
 app.use(cors({
-    origin: "https://kicks-application.vercel.app/",
+    origin: "https://kicks-application.vercel.app/*",
     credentials: true,
   }));
 
