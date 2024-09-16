@@ -12,10 +12,10 @@ export default function ShoeList({queryType, query}) {
                 queryClass: queryType,
                 queryArg: query
             }
-            response = await fetch(`http://localhost:5050/record/`, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(query_data)})
+            response = await fetch(`https://kicks-app.onrender.com/record/`, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(query_data)})
         }
         else {
-            response = await fetch(`http://localhost:5050/record/`)
+            response = await fetch(`https://kicks-app.onrender.com/record/`)
         }
         
         if(!response.ok) {

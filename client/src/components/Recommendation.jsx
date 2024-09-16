@@ -13,7 +13,7 @@ export default function Recommendation({ sharedPrefs }) {
     //Call to get all shoes
     async function fetchRecommendation() {
         const encodedPrefs = encodeURIComponent(sharedPrefs.join(','))
-        const response = await fetch(`http://localhost:5050/inference/${encodedPrefs}`)
+        const response = await fetch(`https://kicks-app.onrender.com/inference/${encodedPrefs}`)
         if(!response.ok) {
             const message = `An error occurred: ${response.statusText}`;
             console.error(message);
@@ -28,7 +28,7 @@ export default function Recommendation({ sharedPrefs }) {
         setStartLoad(true)
         console.log(`${text} requested`)
         const encodedShoe = encodeURIComponent(text)
-        const shoe_response = await fetch(`http://localhost:5050/inference/get_shoe/${encodedShoe}`)
+        const shoe_response = await fetch(`https://kicks-app.onrender.com/inference/get_shoe/${encodedShoe}`)
         if(!shoe_response.ok) {
             const message = `An error occurred: ${shoe_response.statusText}`;
             console.error(message);
