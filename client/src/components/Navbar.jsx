@@ -34,14 +34,14 @@ export default function Navbar() {
                 </NavLink>
 
                 <nav id="Desktop Navbar" className="flex gap-x-5 ml-10 invisible lg:visible">
-                    <NavLink to="/about" className={`text-xl hover:text-orange-500 ${currentPath === '/about' ? 'text-orange-500' : 'text-white'}`}>
+                    <NavLink to="/about"  onClick={handleClick} className={`text-xl hover:text-orange-500 ${currentPath === '/about' ? 'text-orange-500' : 'text-white'}`}>
                         About
                     </NavLink>
-                    <NavLink to="/gallery" className={`text-xl hover:text-orange-500 ${currentPath === '/gallery' ? 'text-orange-500' : 'text-white'}`}>
+                    <NavLink to="/gallery" onClick={handleClick} className={`text-xl hover:text-orange-500 ${currentPath === '/gallery' ? 'text-orange-500' : 'text-white'}`}>
                         Gallery
                     </NavLink>
 
-                    <NavLink to="/explore" className={`text-xl hover:text-orange-500 ${currentPath === '/explore' ? 'text-orange-500' : 'text-white'}`}> 
+                    <NavLink to="/explore" onClick={handleClick} className={`text-xl hover:text-orange-500 ${currentPath === '/explore' ? 'text-orange-500' : 'text-white'}`}> 
                         Explore
                     </NavLink>
                 </nav>
@@ -59,19 +59,19 @@ export default function Navbar() {
                                 </nav>
                                 <div className="w-full border-[0.5px]"></div>
                                 <nav className="px-2">
-                                    <NavLink to="/about" onClick={closeDropdown}>
+                                    <NavLink to="/about" onClick={() => { handleClick(); closeDropdown();}}>
                                     About
                                     </NavLink>
                                 </nav>
                                 <div className="w-full border-[0.5px]"></div>
                                 <nav className="px-2">
-                                    <NavLink to="/gallery" onClick={closeDropdown}>
+                                    <NavLink to="/gallery" onClick={() => { handleClick(); closeDropdown();}}>
                                     Gallery
                                     </NavLink>
                                 </nav>
                                 <div className="w-full border-[0.5px]"></div>
                                 <nav className="px-2">
-                                    <NavLink to="/explore" onClick={closeDropdown}>
+                                    <NavLink to="/explore" onClick={() => { handleClick(); closeDropdown();}}>
                                     Explore
                                     </NavLink>
                                 </nav>
