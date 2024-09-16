@@ -14,8 +14,7 @@ const record_router = express.Router();
 // DB call to get all shoes
 record_router.get("/", async (req, res) => {
     let collection = await db.collection("all_shoes");
-    let results = await collection.find().toArray();
-    console.log(results.length)
+    let results = await collection.find({}).toArray();
     res.send(results).status(200)
 });
 
