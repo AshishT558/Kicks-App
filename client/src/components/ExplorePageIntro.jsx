@@ -94,7 +94,7 @@ export default function ExplorePageIntro({ sharedPrefs, setSharedPrefs}) {
                         <PreferenceBox item={"LIGHTWEIGHT"}></PreferenceBox>
                     </button>
                     <button onClick={() => addPref("Shock Absorption")}>
-                        <PreferenceBox item={"SHOCK ABSORBPTION"}></PreferenceBox>
+                        <PreferenceBox item={"SHOCK ABSORPTION"}></PreferenceBox>
                     </button>
                     <button onClick={() => addPref("Breathability")}>
                         <PreferenceBox item={"BREATHABILITY"}></PreferenceBox>
