@@ -11,6 +11,9 @@ export default function LandingPage() {
         ,
         backgroundRepeat: "no-repeat",
     }
+    const handleClick = () => {
+        window.scrollTo(0,0);
+      };
     return (
         <div id="background_image" className="bg-fixed bg-contain lg:bg-cover bg-[center_5rem] lg:bg-[center_bottom]" style={mainStyle}>
             <div id ="landing_page_1_full_area" className="flex justify-center h-screen">
@@ -46,7 +49,7 @@ export default function LandingPage() {
                                         BROWSE OUR COLLECTION
                                     </div>
                                 </NavLink>
-                                <NavLink to="/explore">
+                                <NavLink to="/explore" onClick={handleClick}>
                                     <div className="flex flex-col items-center justify-center w-[20rem] h-10 bg-orange-500 rounded-full mb-10 ring-2 ring-orange-500 hover:ring-orange-600 hover:scale-105">
                                         FIND ME A SHOE
                                     </div>
