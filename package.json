@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1",
+    "animate-on-scroll": "^1.2.5"
+  }
+}
