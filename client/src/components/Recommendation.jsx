@@ -104,6 +104,7 @@ export default function Recommendation({ sharedPrefs }) {
             <a className="mt-5 hover:text-orange-400" href="#sports">Edit Preferences</a>
             <button className="flex flex-col items-center justify-center w-[20rem] h-10 bg-black rounded-full lg:mb-10 ring-2 ring-orange-500 hover:ring-orange-600 hover:scale-105 mt-20" 
             onClick={fetchRecommendation}>Get Recommendation </button>
+            <h1 className="text-red-500">! This feature is currently down :(</h1>
             <div className="lg:hidden">{startLoad && <Loader className="mt-5"></Loader>}</div>
             <div className="flex lg:flex-row flex-col gap-y-10 text-center lg:gap-x-10 lg:mt-10">{formatRecommendation(llm_rec)}</div>
             <div className="invisible lg:visible">{startLoad && <Loader className="mt-5"></Loader>}</div>
