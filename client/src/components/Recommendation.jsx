@@ -19,8 +19,8 @@ export default function Recommendation({ sharedPrefs }) {
             console.error(message);
             return
         }
-        const recommendation = await response.json();
-        setLLMRec(recommendation[0].generated_text)
+        const recommendation = await response.text();
+        setLLMRec(recommendation)
         setPrefs([])
     }
 
