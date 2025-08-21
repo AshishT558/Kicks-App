@@ -42,16 +42,16 @@ inference_router.get("/:encodedPrefs", async (req, res) => {
         //     { headers }
         // );
         // const generatedTextJSON = response.data;
-        completion = client.chatCompletion(
-            model="meta-llama/Llama-3.1-8B-Instruct",
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
+        const chatCompletion = await client.chatCompletion({
+            model: "meta-llama/Llama-3.1-8B-Instruct",
+            messages: [
+              {
+                role: "user",
+                content: prompt,
+              },
             ],
-        )
-        const generatedText = completion.choices[0].message.content
+          });
+        const generatedText = chatCompletion.choices[0].message.content
         console.log(generatedText)
         res.status(200).send(generatedText);
     } catch (error) {
