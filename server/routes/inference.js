@@ -42,7 +42,7 @@ inference_router.get("/:encodedPrefs", async (req, res) => {
         //     { headers }
         // );
         // const generatedTextJSON = response.data;
-        completion = client.chat.completions.create(
+        completion = client.chatCompletion(
             model="meta-llama/Llama-3.1-8B-Instruct",
             messages=[
                 {
