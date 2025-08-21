@@ -1,9 +1,11 @@
-import express from "express"
-import axios from "axios";
+// import express from "express"
+// import axios from "axios";
+import { InferenceClient } from "@huggingface/inference";
 
 const inference_router = express.Router();
-
+//UPDATED 2025 - use inference client instead of route
 const LLM_KEY = process.env.LLM_KEY
+const client = new InferenceClient(LLM_KEY)
 
 // Route to call llama 3 and get shoe recommendations
 inference_router.get("/:encodedPrefs", async (req, res) => {
@@ -20,28 +22,38 @@ inference_router.get("/:encodedPrefs", async (req, res) => {
     Do not repeat the prompt.
     Do not include any additional text.`;
 
-    const headers = {
-        'Authorization': `Bearer ${LLM_KEY}`,
-        'Content-Type': 'application/json'
-    };
+    // const headers = {
+    //     'Authorization': `Bearer ${LLM_KEY}`,
+    //     'Content-Type': 'application/json'
+    // };
 
-    const data = {
-        'inputs': prompt,
-        'parameters': {
-            'max_new_tokens': 40,
-            'return_full_text': false
-        }
-    };
+    // const data = {
+    //     'inputs': prompt,
+    //     'parameters': {
+    //         'max_new_tokens': 40,
+    //         'return_full_text': false
+    //     }
+    // };
 
     try {
-        const response = await axios.post(
-            'https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8b-Instruct',
-            data, // No need to stringify the data; axios does this automatically
-            { headers }
-        );
-        const generatedTextJSON = response.data;
-        console.log(generatedTextJSON)
-        res.status(200).send(generatedTextJSON);
+        // const response = await axios.post(
+        //     'https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8b-Instruct',
+        //     data, // No need to stringify the data; axios does this automatically
+        //     { headers }
+        // );
+        // const generatedTextJSON = response.data;
+        completion = client.chat.completions.create(
+            model="meta-llama/Llama-3.1-8B-Instruct",
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+        )
+        const generatedText = completion.choices[0].message.content
+        console.log(generatedText)
+        res.status(200).send(generatedText);
     } catch (error) {
         console.error("Error getting recommendation:", error.response ? error.response.data : error.message);
         res.status(500).send("Error getting recommendation");
