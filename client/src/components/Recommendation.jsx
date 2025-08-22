@@ -28,16 +28,33 @@ export default function Recommendation({ sharedPrefs }) {
         setStartLoad(true)
         console.log(`${text} requested`)
         const encodedShoe = encodeURIComponent(text)
-        const shoe_response = await fetch(`https://kicks-app.onrender.com/inference/get_shoe/${encodedShoe}`)
-        if(!shoe_response.ok) {
-            const message = `An error occurred: ${shoe_response.statusText}`;
-            console.error(message);
-            return
+        //UPDATE: routing to direct sites
+        const errorText = "PRICE CHECKER PERFORMANCE CURRENTLY LIMITED TO UNDERARMOUR :( Click 'Explore' on the Under Armour option or 'OK' to check out this option on a seller site! "
+        const link = ""
+        switch (text) {
+            case text.includes("Nike"):
+                link = `https://www.nike.com/w?q=${encodedShoe}&vst=${encodedShoe}`
+            case text.includes("Skechers") :
+                link = `https://www.skechers.com/search/?q=${encodedShoe}`
+            case text.includes("Adidas") :
+                link = `https://www.adidas.com/us/search?q=${encodedShoe}`
+            case text.includes("Under Armour") :
+                link = `https://www.underarmour.com/en-us/search/?q=${encodedShoe}`
+            
         }
-        const shoeDetails = await shoe_response.json()
-        console.log("All API Calls success:", shoeDetails)
-        setExplored(shoeDetails)
-        console.log(exploredShoe.length)
+        if (window.confirm(errorText)) 
+        {
+        window.open(link, '_blank');
+        };
+        // const shoe_response = await fetch(`https://kicks-app.onrender.com/inference/get_shoe/${encodedShoe}`)
+        // if(!shoe_response.ok) {
+        //     const message = `An error occurred: ${shoe_response.statusText}`;
+        //     console.error(message);
+        // }
+        // const shoeDetails = await shoe_response.json()
+        // console.log("All API Calls success:", shoeDetails)
+        // setExplored(shoeDetails)
+        // console.log(exploredShoe.length)
         setStartLoad(false)
         setLoaded(true)
         
