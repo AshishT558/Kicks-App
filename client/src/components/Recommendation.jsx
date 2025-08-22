@@ -124,7 +124,7 @@ export default function Recommendation({ sharedPrefs }) {
             onClick={fetchRecommendation}>Get Recommendation </button>
             <div className="lg:hidden">{startLoad && <Loader className="mt-5"></Loader>}</div>
             <div className="flex lg:flex-row flex-col gap-y-10 text-center lg:gap-x-10 lg:mt-10">{formatRecommendation(llm_rec)}</div>
-            <div className="invisible lg:visible">{startLoad && <Loader className="mt-5"></Loader>}</div>
+            <div className="invisible lg:visible">{startLoad && <Loader className="mt-5">Allow up to 20s to fetch prices :)</Loader>}</div>
             <div className="grid lg:grid-cols-4 mt-20 gap-5 ">
                 {loaded && shoeList()}
             </div>
