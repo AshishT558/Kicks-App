@@ -30,21 +30,23 @@ export default function Recommendation({ sharedPrefs }) {
         const encodedShoe = encodeURIComponent(text)
         //UPDATE: routing to direct sites
         const errorText = "PRICE CHECKER PERFORMANCE CURRENTLY LIMITED TO UNDERARMOUR :( Click 'Explore' on the Under Armour option or 'OK' to check out this option on a seller site! "
-        const link = ""
-        switch (text) {
-            case text.includes("Nike"):
-                link = `https://www.nike.com/w?q=${encodedShoe}&vst=${encodedShoe}`
-            case text.includes("Skechers") :
-                link = `https://www.skechers.com/search/?q=${encodedShoe}`
-            case text.includes("Adidas") :
-                link = `https://www.adidas.com/us/search?q=${encodedShoe}`
-            
+        let link = ""
+        if (text.includes("Nike")) {
+            link = `https://www.nike.com/w?q=${encodedShoe}&vst=${encodedShoe}`;
+        } else if (text.includes("Skechers")) {
+            link = `https://www.skechers.com/search/?q=${encodedShoe}`;
+        } else if (text.includes("Adidas")) {
+            link = `https://www.adidas.com/us/search?q=${encodedShoe}`;
         }
-        if (window.confirm(errorText)) 
-        {
-        window.location.href=link
-        return
-        };
+        
+        // If NOT Under Armour → redirect to seller site
+        if (!text.toLowerCase().includes("under armour")) {
+            if (window.confirm(errorText)) {
+                window.location.href = link;
+            }
+            setStartLoad(false);
+            return; // stop here
+        }
         const shoe_response = await fetch(`https://kicks-app.onrender.com/inference/get_shoe/${encodedShoe}`)
         if(!shoe_response.ok) {
             const message = `An error occurred: ${shoe_response.statusText}`;
