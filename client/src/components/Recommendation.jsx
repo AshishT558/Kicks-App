@@ -38,23 +38,22 @@ export default function Recommendation({ sharedPrefs }) {
                 link = `https://www.skechers.com/search/?q=${encodedShoe}`
             case text.includes("Adidas") :
                 link = `https://www.adidas.com/us/search?q=${encodedShoe}`
-            case text.includes("Under Armour") :
-                link = `https://www.underarmour.com/en-us/search/?q=${encodedShoe}`
             
         }
         if (window.confirm(errorText)) 
         {
-        window.open(link, '_blank');
+        window.location.href=link
+        return
         };
-        // const shoe_response = await fetch(`https://kicks-app.onrender.com/inference/get_shoe/${encodedShoe}`)
-        // if(!shoe_response.ok) {
-        //     const message = `An error occurred: ${shoe_response.statusText}`;
-        //     console.error(message);
-        // }
-        // const shoeDetails = await shoe_response.json()
-        // console.log("All API Calls success:", shoeDetails)
-        // setExplored(shoeDetails)
-        // console.log(exploredShoe.length)
+        const shoe_response = await fetch(`https://kicks-app.onrender.com/inference/get_shoe/${encodedShoe}`)
+        if(!shoe_response.ok) {
+            const message = `An error occurred: ${shoe_response.statusText}`;
+            console.error(message);
+        }
+        const shoeDetails = await shoe_response.json()
+        console.log("All API Calls success:", shoeDetails)
+        setExplored(shoeDetails)
+        console.log(exploredShoe.length)
         setStartLoad(false)
         setLoaded(true)
         
