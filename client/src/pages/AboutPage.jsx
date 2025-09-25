@@ -4,7 +4,7 @@ export default function AboutPage() {
     return (
         <ContentPage>
             <div className="text-2xl lg:text-5xl animate-up-float">About Kicks</div>
-            <p>Hey! My name is <span className="text-blue-500 hover:text-blue-700"><a href="https://www.ashishthomas.dev/" target="_blank" rel="noopener noreferrer">Ashish ↗</a></span> and I built <span className="text-orange-500 font-bold">Kicks.</span></p>
+            <p>Hey! My name is <span className="text-blue-500 hover:text-blue-700"><a href="https://ashishthomas.vercel.app/" target="_blank" rel="noopener noreferrer">Ashish ↗</a></span> and I built <span className="text-orange-500 font-bold">Kicks.</span></p>
             <div className="lg:grid lg:grid-cols-3 gap-x-10 pt-5 fade-in text-center">
                 <div>
                     <h1 className="font-bold text-2xl pt-[15rem] lg:pt-[3rem]">What this?</h1>
